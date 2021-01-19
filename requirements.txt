@@ -1,0 +1,9 @@
+# Function dependencies, for example:
+# package>=version
+google-cloud-storage==1.19.1
+google-cloud-vision==2.0.0
+google-cloud-texttospeech==2.2.0
+
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
