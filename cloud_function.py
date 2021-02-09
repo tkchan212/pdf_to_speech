@@ -97,16 +97,7 @@ def pdf_tt(gcs_source_uri,gcs_destination_uri):
 
 	# Process the first output file from GCS.
 
-	"""
-	with open("temp.txt", "w+") as file_obj: 
-		for i in range(len(blob_list)):
-			response = json.loads(blob_list[i].download_as_string()) 
-			file_obj.write(blob_list[i].name+"\n")
-			#print(blob_list[i].name+"\n")
-			file_obj.write(response['responses'][0]['fullTextAnnotation']['text']) 
 
-			#Don't write to text file on cloud!
-	"""
 
 	unfiltered_content = ""
 
@@ -176,47 +167,6 @@ def tts(bucket,text,prefix):
 	output.upload_from_string(response.audio_content)
 	print('Audio content written to file "output.mp3"')	
 
-
-"""
-
-def tts(bucket,text,prefix):
-	request = { #write the request file 
-		"input" : {
-			"text" : text 
-		},
-		"voice" : {
-			"languageCode": "yue-HK",
-			"name": "yue-HK-Standard-B",
-			"ssmlGender": "MALE"
-		},		
-		"audioConfig" : {
-			"audioEncoding": "MP3"
-		}
-	}
-	
-	
-	print('Passing text to Google cloud TTS.')
-	print("Text:", text[0:100])
-
-	out = subprocess.run(["curl -X POST -H \"Authorization: Bearer \"$(gcloud auth application-default print-access-token) -H \"Content-Type: application/json; charset=utf-8\" -d {} https://texttospeech.googleapis.com/v1/text:synthesize".format(request)],bufsize = -1,shell = True,capture_output=True)
-	text_output = str(getattr(out,'stdout'))
-	text_output = text_output.replace(r"\n" , "").replace("b'", "'")[1:-1]
-	#Here, text_output should be a json. I should be able to load a str instead of file
-
-	
-	#out = json.load(text_output) << if without this TypeError: string indices must be integers 
-	# with this AttributeError: 'str' object has no attribute 'read' 
-	out = json.loads(text_output)
-	print(type(out))
-	print(out)
-	audio = out["audioContent"] #text_output is still string 
-	print("Audio:", audio[0:100])
-	decoded = base64.standard_b64decode(audio)
-
-	
-	#write content to storage bucket
-	text_output = bucket.blob( "{}.mp3".format(prefix))	 #input filename
-	text_output.upload_from_string(decoded)	"""
 
 
 
